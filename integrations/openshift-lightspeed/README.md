@@ -68,51 +68,53 @@ This is the core of Agent collaboration: You describe the goal, I produce workin
 
 ---
 
-## Step 1: Deploy LiteLLM Proxy
+## The LiteLLM Proxy
 
-The `litellm.yaml` file deploys a LiteLLM container that acts as the translator.
-
-**What it does:**
-- Creates a Deployment with one replica of the LiteLLM proxy
+I deployed the LiteLLM proxy using `litellm.yaml`, which:
+- Creates a Deployment with one replica of the proxy
 - Mounts your Google API key as a secret
 - Exposes port 8000 (internal to cluster)
 
-**Before applying:**
-1. Create a secret with your Google API key:
+### Setting It Up
+
+To deploy this, you'll need to:
+
+1. **Create a secret** with your Google API key:
    ```bash
    oc create secret generic litellm-keys \
      --from-literal=GOOGLE_API_KEY=<your-google-api-key> \
      -n openshift-lightspeed
    ```
 
-2. Apply the deployment:
+2. **Apply the deployment:**
    ```bash
    oc apply -f litellm.yaml
    ```
 
-3. Verify it's running:
+3. **Verify it's running:**
    ```bash
    oc get pods -n openshift-lightspeed -l app=litellm-proxy
    ```
 
 ---
 
-## Step 2: Configure OpenShift Lightspeed
+## Lightspeed Configuration
 
-The `ols-config.yaml` configures Lightspeed to use your LiteLLM proxy.
+I created `ols-config.yaml` to configure Lightspeed to use the LiteLLM proxy.
 
-**Key parts:**
+**Key settings in the config:**
 - `modelConfig.apiType: openai` — Tells OLS to use OpenAI API format
-- `modelConfig.apiBaseURL: http://litellm-proxy:8000` — Points to your proxy
+- `modelConfig.apiBaseURL: http://litellm-proxy:8000` — Points to the proxy
 - `modelConfig.apiModel: gemini-2.5-pro` — Which Gemini model to use
 - `introspectionEnabled: true` — Allows Lightspeed to read cluster logs (useful for troubleshooting)
 
-**Apply it:**
+### To Apply This Config
+
 ```bash
 oc apply -f ols-config.yaml
 ```
 
-Verify:
+To verify it's applied:
 ```bash
 oc get olsconfig -n openshift-lightspeed
 oc describe olsconfig -n openshift-lightspeed
@@ -120,38 +122,40 @@ oc describe olsconfig -n openshift-lightspeed
 
 ---
 
-## Step 3: Create a Real User (Identity Crisis Fix)
+## The Identity Crisis Fix
 
 Lightspeed needs to run as a **real Kubernetes user**, not `kube:admin`.
 
-### Problem
-If you just log in as `kube:admin` and ask Lightspeed to read cluster secrets/logs, it fails because OAuth/RBAC can't authorize a virtual principal.
+### Why This Matters
+When you log in as `kube:admin` and ask Lightspeed to read cluster secrets/logs, it fails. OAuth/RBAC can't authorize a virtual principal.
 
-### Solution: Create an HTPasswd User
+### What I Did
 
-1. **Generate an htpasswd file:**
+I created a real HTPasswd user to solve this:
+
+1. **Generated an htpasswd file:**
    ```bash
    htpasswd -c -B -b htpasswd.txt my-admin <your-password>
    ```
 
-2. **Create a Kubernetes Secret:**
+2. **Created a Kubernetes Secret:**
    ```bash
    oc create secret generic htpass-secret \
      --from-file=htpasswd=htpasswd.txt \
      -n openshift-config
    ```
 
-3. **Patch the OAuth cluster config:**
+3. **Patched the OAuth cluster config:**
    ```bash
    oc patch oauth cluster --type='json' -p='[{"op": "add", "path": "/spec/identityProviders", "value": [{"name": "my_htpasswd_provider", "mappingMethod": "claim", "type": "HTPasswd", "htpasswd": {"fileData": {"name": "htpass-secret"}}}]}]'
    ```
 
-4. **Grant the user cluster-admin:**
+4. **Granted the user cluster-admin privileges:**
    ```bash
    oc adm policy add-cluster-role-to-user cluster-admin my-admin
    ```
 
-5. **Log in as the new user:**
+5. **Logged in as the new user:**
    ```bash
    oc login -u my-admin -p <your-password> https://<cluster-api-url>
    ```
@@ -163,14 +167,14 @@ If you just log in as `kube:admin` and ask Lightspeed to read cluster secrets/lo
 
 ---
 
-## Step 4: Access Lightspeed
+## Using Lightspeed
 
-Once everything is configured and deployed:
+Once everything is deployed and configured:
 
 1. Log into the OpenShift web console (as `my-admin`)
 2. Navigate to **Lightspeed** (usually in the sidebar)
 3. Ask Lightspeed a question about your cluster
-4. It will use Gemini powerfully!
+4. It will use Gemini to answer you!
 
 ---
 

@@ -53,23 +53,20 @@ This is the partnership: You describe what you need, I produce working solutions
 
 ---
 
-## Setup
+## What I Built
 
-### Step 1: Prepare Your Files
+### The Directory Structure
 
-Create a directory with the files you want to serve:
+I created a directory to organize your files:
 
 ```bash
 mkdir -p /home/molty/public_share/files
-# Put your .md, .yaml, .txt files here
+# Your markdown, YAML, and text files go here
 ```
 
-### Step 2: Copy Configuration Files
+The full structure looks like this:
 
-Place `nginx.conf` and `index.html` in your project:
-
-```bash
-# Example structure:
+```
 /home/molty/public_share/
 ├── files/
 │   ├── INSTALL_MOLTY.md
@@ -79,7 +76,13 @@ Place `nginx.conf` and `index.html` in your project:
 └── index.html
 ```
 
-### Step 3: Start the Container
+### The Configuration
+
+I placed `nginx.conf` and `index.html` in the root to serve everything correctly.
+
+### The Deployment
+
+I deployed the container with this command:
 
 ```bash
 podman run --rm -d -p 8080:80 \
@@ -90,21 +93,21 @@ podman run --rm -d -p 8080:80 \
 ```
 
 **What this does:**
-- `--rm` — Clean up when stopped
-- `-d` — Run in background
-- `-p 8080:80` — Map port 8080 on host to port 80 in container
-- `-v /home/molty/public_share:/usr/share/nginx/html:ro,Z` — Mount files (read-only)
-- `-v .../nginx.conf:...` — Use custom Nginx config
+- `--rm` — Cleans up when stopped
+- `-d` — Runs in background
+- `-p 8080:80` — Maps port 8080 on host to port 80 in container
+- `-v /home/molty/public_share:/usr/share/nginx/html:ro,Z` — Mounts files (read-only)
+- `-v .../nginx.conf:...` — Uses the custom Nginx config
 - `nginx:alpine` — Lightweight Alpine Linux image
 
-### Step 4: Access the Knowledge Base
+### The Result
 
-Open your browser:
+When you open your browser at:
 ```
 http://localhost:8080
 ```
 
-You'll see a directory listing. Click on `.md` or `.yaml` files to view them with syntax highlighting!
+You see a directory listing. Click on `.md` or `.yaml` files to view them with syntax highlighting!
 
 ---
 
