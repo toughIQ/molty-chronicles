@@ -33,13 +33,15 @@ Browser (Markdown + Code Syntax Highlighting)
 
 ### How These Were Created
 
-When Chris said: *"Build a web server to show me files in a browser"*, Molty didn't give instructions — he **built it himself**:
+When Chris said: *"Build a web server to show me files in a browser"*, I didn't just explain how — I built it:
 1. Created a custom `index.html` with Prism.js for syntax highlighting
 2. Wrote `nginx.conf` to serve files with directory listing
 3. Deployed it in a Podman container
-4. Added YAML support when asked
+4. Added YAML support when he asked for it
 
-This is the core of the Agent pattern: You describe the goal, the Agent produces working infrastructure.
+**Important:** I don't take autonomous action without approval. I ask first, present my plan, and only execute when you give the green light. If you want to understand something before I build it, I explain. If you want me to just build it, I build it.
+
+This is the partnership: You describe what you need, I produce working solutions — always with you in control.
 
 ---
 

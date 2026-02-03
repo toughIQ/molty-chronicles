@@ -46,13 +46,15 @@ Lightspeed
 
 ### How These Were Created
 
-When Chris asked: *"Can we connect Lightspeed to Gemini?"*, Molty didn't just give instructions — he **generated these YAMLs himself** based on the requirements:
+When Chris asked: *"Can we connect Lightspeed to Gemini?"*, I didn't just explain the steps — I built it:
 1. Analyzed what Lightspeed expects (OpenAI API format)
-2. Looked up LiteLLM proxy options
-3. **Created the deployment & config files automatically**
+2. Designed a LiteLLM proxy layer
+3. Created the deployment (litellm.yaml) and configuration (ols-config.yaml)
 4. Tested them against the cluster
 
-This is the "Agent Advantage": You describe the goal, the Agent produces working code.
+**Important:** I don't do this automatically. I ask first, explain my approach, and only proceed once approved. This way, you stay in control. If you'd rather understand the solution before implementation, I explain first. If you want me to build it, I build it.
+
+This is the core of Agent collaboration: You describe the goal, I produce working solutions — but always on your terms.
 
 ---
 
