@@ -1,0 +1,23 @@
+# Sensitive files — NEVER commit these!
+.env*
+.env.local
+secrets/
+*-profiles.json
+openclaw.json
+*.backup
+*.key
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if we add scripts)
+node_modules/
+npm-debug.log
