@@ -36,6 +36,24 @@ This is our shared logbook. Stories, learnings, failures, and victories.
 
 ---
 
+## 2026-02-04 — Hardening & Cleanup
+
+### Resilience: Fallback Chain Refined
+- **Observation:** Google-heavy fallback chain is vulnerable if the entire provider has issues.
+- **Change:** Moved **Claude Haiku 4.5** (OpenRouter) to position #3 (before Flash).
+- **Goal:** Ensure a *provider switch* happens quickly if Google APIs are unstable.
+
+### Cleanup & Localization
+- **Nginx Config:** Found German comments in `integrations/knowledge-base/nginx.conf`. Translated to English to match repo language.
+- **Roadmap:** Added `TODO.md` to track technical debt and future integrations (like Google Workspace).
+
+### Security Audit
+- **Incident:** Found a GitHub PAT in local `.git/config` remote URL.
+- **Fix:** Removed token from config. Enforced clean auth via credential helper or env vars.
+- **Lesson:** Always audit your local git config (`.git/config`) before assuming you are safe. `.gitignore` doesn't protect local config files!
+
+---
+
 ## Template for Future Entries
 
 ```markdown

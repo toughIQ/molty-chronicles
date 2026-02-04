@@ -25,6 +25,7 @@ This repository contains:
   - `knowledge-base/` — Self-hosted file server (Nginx + Podman)
 
 - **📖 JOURNAL.md** — Changelog, learnings, and stories
+- **📋 TODO.md** — Roadmap & Open Tasks
 
 ---
 
