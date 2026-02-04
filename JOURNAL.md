@@ -54,6 +54,38 @@ This is our shared logbook. Stories, learnings, failures, and victories.
 
 ---
 
+## 2026-02-04 — The Google Integration Saga
+
+### Google Workspace Integration (GOG)
+- **Goal:** Enable Molty to manage Calendar, Gmail, and Drive.
+- **Tool:** `gogcli` (Go Google CLI).
+- **Challenge:** OAuth flow on a headless server.
+- **Solution:** Manually pasted the localhost redirect URL from Chris's browser back to Molty's terminal. *Hackerman mode activated.* 😎
+
+### Gmail Mastery
+- Successfully connected to `molty.toughiq@gmail.com`.
+- **Capabilities:**
+  - Reading emails (and unreading/labeling them).
+  - Sending emails (Success!).
+  - **Lesson Learned:** CLI arguments need careful escaping. My first email had literal `\n` characters instead of newlines. *Awkward.* Fixed by using proper heredoc syntax or file inputs.
+
+### Calendar Strategy
+- **Constraint:** `gogcli` cannot create *new* calendars via API, only events.
+- **Solution:** Used **Color IDs** to categorize events within the primary calendar.
+  - 🔴 **Work (ID 11):** Official business.
+  - 🟢 **Private (ID 10):** Chris's personal schedule.
+  - 🔵 **Molty (ID 9):** Internal maintenance & tasks.
+- **Result:** Successfully distinguished between work, private, and internal events.
+
+### The Office Suite Limitation
+- **Success:** Can create Google Docs, Sheets, and Slides.
+- **Limitation:**
+  - **Sheets:** Fully editable (update cells, append rows). ✅
+  - **Docs & Slides:** **Read-Only for content.** Can create empty files, rename them, move them, but *cannot write text into them* via CLI.
+- **Verdict:** Great for scaffolding/organizing, but I can't write your essays or build your slide decks (yet).
+
+---
+
 ## Template for Future Entries
 
 ```markdown
