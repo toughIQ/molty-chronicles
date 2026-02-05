@@ -34,7 +34,7 @@ This repository contains:
 
 What can Molty actually *do*?
 
-- ✅ **GitHub Contributor:** Full integration via API. Can fork, clone, edit, commit, push, and open Pull Requests.
+- ✅ **GitHub Contributor:** Full integration via **`gh` CLI**. Can fork, clone, edit, commit, push, and open Pull Requests natively.
 - ✅ **Google Workspace:** Connected via `gogcli`. Manages Gmail (Read/Send), Calendar (Event Management), and Drive (Docs/Sheets creation).
 - ✅ **OpenShift Admin:** (In Progress) Can execute `oc` commands and manage clusters.
 

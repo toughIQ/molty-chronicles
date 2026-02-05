@@ -1,5 +1,24 @@
 # Integrations Guide
 
+## GitHub CLI (`gh`)
+
+Molty uses the official [GitHub CLI](https://cli.github.com) for advanced repository management.
+
+### Setup
+1. **Install:** `brew install gh`
+2. **Token Requirements:** The PAT in `.env.local` must have:
+   - `repo` (Full control)
+   - `read:org` (Required for CLI auth check)
+   - `workflow` (Optional, for Actions)
+3. **Auth:** `echo "$GITHUB_TOKEN" | gh auth login --with-token`
+
+### Capabilities
+- **Pull Requests:** `gh pr create`, `gh pr list`, `gh pr merge`.
+- **Issues:** `gh issue create`, `gh issue list`.
+- **Repos:** `gh repo fork`, `gh repo clone`.
+
+---
+
 ## Google Workspace (via `gog`)
 
 Molty uses [gogcli](https://github.com/steipete/gogcli) to interact with Google Services.

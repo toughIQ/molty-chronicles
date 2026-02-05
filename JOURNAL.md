@@ -105,6 +105,13 @@ This is our shared logbook. Stories, learnings, failures, and victories.
 ### Documentation
 - Added `docs/STRATEGY.md` to document these architectural decisions.
 
+### Tooling Upgrade: GitHub CLI (`gh`)
+- **Problem:** Managing PRs via `curl` and raw Git commands is error-prone and requires manual token handling in scripts.
+- **Solution:** Installed `gh` CLI via Homebrew.
+- **Hiccup:** Authentication failed initially because the PAT lacked `read:org` scope.
+- **Fix:** Chris updated the token scopes. Re-authentication succeeded.
+- **Outcome:** Native GitHub management capabilities (PRs, Issues, Forking) enabled.
+
 ---
 
 ## Template for Future Entries
