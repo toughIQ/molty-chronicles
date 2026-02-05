@@ -86,6 +86,27 @@ This is our shared logbook. Stories, learnings, failures, and victories.
 
 ---
 
+## 2026-02-05 — Resilience & Optimization
+
+### The Great Fallback Fail
+- **Incident:** Google API Quota hit hard limit (`429 Daily Limit Exceeded`).
+- **Failure:** The fallback chain was `Google -> Google -> Google`. When Google locked the account, *all* models failed simultaneously.
+- **Fix:** Reconfigured `openclaw.json` to insert **OpenRouter (Claude Haiku)** at Position #2.
+- **Result:** True multi-provider resilience. If Google dies, we switch to Anthropic immediately.
+
+### Optimization: English Migration
+- **Observation:** German text consumes significantly more tokens (2-3x) than English due to tokenizer efficiency.
+- **Action:**
+  - Migrated `MEMORY.md`, `USER.md`, and `SOUL.md` to English.
+  - Switched default agent language to English.
+  - Enforced "No Fluff" policy in system prompts.
+- **Goal:** Lower costs, faster inference, larger effective context window.
+
+### Documentation
+- Added `docs/STRATEGY.md` to document these architectural decisions.
+
+---
+
 ## Template for Future Entries
 
 ```markdown
